@@ -1,0 +1,199 @@
+---
+import { reviewsData } from '../data/reviews';
+---
+
+<section id="reviews" class="reviews-section" aria-labelledby="reviews-title">
+  <div class="container">
+    <div class="reviews-header">
+      <div class="section-tag">
+        <span>05 / USER EVALUATION & PERSPECTIVES</span>
+      </div>
+      <h2 id="reviews-title" class="section-title">
+        用户体验场景反馈与多视角评估
+      </h2>
+      <p class="section-desc">
+        汇聚开发者、学术科研、跨境业务与 AI 交互用户的真实场景反馈。本处评价严格标注为“多业务使用视角反馈”，杜绝冒充官方资质背书，坚决不使用虚假星级结构化数据。
+      </p>
+    </div>
+
+    <!-- 6-card Grid: 3 columns on desktop, 2 on tablet, 1 on mobile -->
+    <div class="reviews-grid">
+      {reviewsData.map((review) => (
+        <article class="review-card" id={review.id}>
+          <div class="review-top">
+            <div class="review-avatar" style={`background-color: ${review.avatarColor};`}>
+              <span class="avatar-letter">{review.author.slice(0, 1).toUpperCase()}</span>
+            </div>
+
+            <div class="review-author-meta">
+              <span class="review-author-name">{review.author}</span>
+              <span class="review-author-role">{review.role}</span>
+            </div>
+
+            <span class="review-badge">{review.badge}</span>
+          </div>
+
+          <div class="review-rating" aria-label={`评级：${review.rating} 星`}>
+            {Array.from({ length: review.rating }).map(() => (
+              <svg viewBox="0 0 20 20" width="16" height="16" fill="#FFBE42" aria-hidden="true">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            ))}
+          </div>
+
+          <h3 class="review-card-title">{review.title}</h3>
+
+          <p class="review-content">
+            “{review.content}”
+          </p>
+
+          <div class="review-card-footer font-mono">
+            <span>记录日期：{review.date}</span>
+            <span style="color: #7B8CA3;">体验场景采样</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background: #0A192D;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .reviews-header {
+    margin-bottom: 3rem;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .review-card {
+    background: #050D1A;
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .review-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-cyan);
+  }
+
+  .review-top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .review-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .avatar-letter {
+    color: #050D1A;
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+
+  .review-author-meta {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+  }
+
+  .review-author-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+
+  .review-author-role {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .review-badge {
+    background: rgba(41, 79, 105, 0.4);
+    color: var(--accent-cyan);
+    font-size: 0.7rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .review-rating {
+    display: flex;
+    gap: 0.2rem;
+  }
+
+  .review-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-light);
+    line-height: 1.3;
+  }
+
+  .review-content {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    flex-grow: 1;
+  }
+
+  .review-card-footer {
+    border-top: 1px solid rgba(41, 79, 105, 0.35);
+    padding-top: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .reviews-audit-note {
+    background: rgba(16, 38, 63, 0.5);
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 1024px) {
+    .reviews-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 680px) {
+    .reviews-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,35 @@
+/* Data Story Narrative & Region Layouts */
+
+.story-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Base utilities for narrative story sections */
+.story-badge-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  background: rgba(108, 221, 233, 0.12);
+  border: 1px solid rgba(108, 221, 233, 0.35);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+.unmeasured-flag {
+  color: #FFC069;
+  font-style: italic;
+}
+
+/* Mobile responsive sticky release */
+@media (max-width: 992px) {
+  .story-sticky-pane,
+  .story-sticky-nav-bar {
+    position: relative;
+    top: 0;
+  }
+}

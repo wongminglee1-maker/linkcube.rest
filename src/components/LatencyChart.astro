@@ -1,0 +1,142 @@
+---
+import { verifiedMeasurements, schemaSampleRecord } from '../data/measurements';
+import { regionsData } from '../data/regions';
+
+const hasData = verifiedMeasurements.length > 0;
+---
+
+<div class="chart-card reveal-on-scroll" id="chart-latency-card">
+  <div class="chart-header">
+    <div class="chart-title-area">
+      <h3 class="chart-title">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" style="color: var(--accent-cyan);">
+          <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+        </svg>
+        <span>图表 A / C：不同地区端到端延迟与丢包率对比</span>
+      </h3>
+      <span class="chart-subtitle">
+        指标单位：往返时延 Latency (ms) · 丢包率 Packet Loss (%) · 时区基准：Asia/Shanghai (UTC+8)
+      </span>
+    </div>
+
+    <!-- Toggle between graphic view and accessible table view -->
+    <div class="chart-view-toggle">
+      <button class="toggle-view-btn is-active" data-view="chart" aria-pressed="true">
+        图形视图
+      </button>
+      <button class="toggle-view-btn" data-view="table" aria-pressed="false">
+        数据表格
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="chart-filter-bar">
+    <div class="filter-group">
+      <label for="filter-region-select" class="filter-label">地区筛选：</label>
+      <select id="filter-region-select" class="filter-select">
+        <option value="all">全部参考地区</option>
+        {regionsData.map((r) => (
+          <option value={r.id}>{r.regionName} ({r.countryCode})</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="filter-slot-select" class="filter-label">时段筛选：</label>
+      <select id="filter-slot-select" class="filter-select">
+        <option value="all">全天时段</option>
+        <option value="MORNING">早晨时段 (06:00-11:59)</option>
+        <option value="DAYTIME">白天使段 (12:00-18:59)</option>
+        <option value="PEAK_EVENING">晚高峰时段 (19:00-23:59)</option>
+        <option value="LATE_NIGHT">深夜时段 (00:00-05:59)</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="filter-metric-select" class="filter-label">核心指标：</label>
+      <select id="filter-metric-select" class="filter-select">
+        <option value="latency">往返延迟 (Latency ms)</option>
+        <option value="loss">丢包率 (Packet Loss %)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Graphic View -->
+  <div class="chart-viewport" aria-label="延迟与丢包率柱状图表区域">
+    {hasData ? (
+      <div class="real-chart-content">
+        <!-- Rendered if measurements exist -->
+      </div>
+    ) : (
+      <div class="chart-empty-state">
+        <svg class="chart-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <h4 class="chart-empty-title">暂无可核实的正式实测记录</h4>
+        <p class="chart-empty-desc">
+          本站严格遵守数据真实性规范。在未取得带有完整时间戳、客户端环境与多时段采样的第三方原始测速日志前，绝不使用随机假数据伪造柱状图。
+        </p>
+        <div style="margin-top: 0.5rem;">
+          <a href="/data-methodology/" class="btn btn-secondary btn-sm">
+            查看测速数据接入标准规范 ↗
+          </a>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- Accessible Table Alternative View -->
+  <div class="chart-table-container" style="display: none;">
+    <table class="chart-data-table" aria-label="地区节点实测指标对照表">
+      <thead>
+        <tr>
+          <th scope="col">参考地区</th>
+          <th scope="col">测试时段</th>
+          <th scope="col">往返延迟 (ms)</th>
+          <th scope="col">丢包率 (%)</th>
+          <th scope="col">抖动 (ms)</th>
+          <th scope="col">样本量</th>
+          <th scope="col">数据状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        {regionsData.map((region) => (
+          <tr data-row-region={region.id} data-row-slot="PEAK_EVENING">
+            <td><strong>{region.regionName}</strong></td>
+            <td>晚高峰 (19:00-23:59)</td>
+            <td class="val-null">待实测 (Null)</td>
+            <td class="val-null">待实测 (Null)</td>
+            <td class="val-null">待实测 (Null)</td>
+            <td class="font-mono">0</td>
+            <td>
+              <span class="status-badge status-reference">REFERENCE_ONLY</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <div id="filter-empty-message" style="display: none; padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+      所选筛选条件下无可用测试记录。
+    </div>
+  </div>
+
+  <div class="chart-footer">
+    <div class="chart-legend">
+      <div class="legend-item">
+        <span class="legend-color cyan"></span>
+        <span>延迟基准 (ms)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color gold"></span>
+        <span>晚高峰丢包率 (%)</span>
+      </div>
+    </div>
+    <div class="chart-source-tag">
+      <span>来源审核：</span>
+      <span class="font-mono" style="color: var(--accent-cyan);">ISO 25012 诚信准则 · 缺失值如实标空</span>
+    </div>
+  </div>
+</div>

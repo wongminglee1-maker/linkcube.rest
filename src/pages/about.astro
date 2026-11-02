@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { brand } from '../data/brand';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": brand.canonicalUrl + "/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "关于本站",
+      "item": brand.canonicalUrl + "/about/"
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="关于 LinkCube 官网与 Data Story 数据叙事落地页"
+  description="了解 LinkCube (linkcube.rest) 官方风格数据落地页的设立宗旨、数据质量规范、客观中立原则与品牌背景说明。"
+  canonical={`${brand.canonicalUrl}/about/`}
+  schema={breadcrumbSchema}
+>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <nav class="breadcrumb-nav" aria-label="页面路径导航">
+      <ol class="breadcrumb-list">
+        <li><a href="/">首页</a></li>
+        <li><span class="bc-sep">/</span></li>
+        <li aria-current="page"><span class="bc-current">关于本站</span></li>
+      </ol>
+    </nav>
+
+    <div class="about-card">
+      <div class="section-tag">
+        <span>ABOUT LINKCUBE · 关于我们</span>
+      </div>
+      <h1 class="about-title">LinkCube Data Story 品牌与数据叙事倡议</h1>
+
+      <div class="about-prose">
+        <p>
+          欢迎访问 <strong>LinkCube (linkcube.rest)</strong>。在当今繁杂的跨境网络加速与机场推荐市场中，信息不对称、夸大宣传与虚假测速截图屡见不鲜。动辄“全网 0 丢包”、“全国千兆秒开”的口号，不仅掩盖了网络物理传输的真实规律，也让普通消费者在遇到晚高峰卡顿时无所适从。
+        </p>
+
+        <h2>我们的初衷与定位</h2>
+        <p>
+          本站作为 LinkCube 品牌的官方风格数据落地页，旨在通过透明的<strong>数据滚动叙事（Data Story）</strong>与严谨的<strong>网络工程知识科普</strong>，还原网络连接背后的技术真相。我们坚守以下四大底线：
+        </p>
+
+        <ul>
+          <li><strong>坚持来源透明</strong>：所有引用自参考站（linkcube.help 与 linkcube.biz）的公开资料均保留原始 URL 与核验日期，不随意捏造数据源；</li>
+          <li><strong>承认价格冲突</strong>：当不同参考站出现资费与规格不一致时，坚决不进行虚假的人工拼凑，客观列出双源比对，并指引进入正式收银台结算；</li>
+          <li><strong>严守数据诚信</strong>：无真实测速日志时不生成虚假的实时仪表盘，缺失指标如实标空（Null），绝不填“0”欺骗读者；</li>
+          <li><strong>拒绝虚假背书</strong>：不编造未经核实的公司资质与虚假认证，为技术用户提供切实可信的网络选型参考。</li>
+        </ul>
+
+        <h2>正式分发与账户说明</h2>
+        <p>
+          本站设置的所有注册、订阅与购买跳转，均连接至官方授权的外部客户端分发与结算通道（<code>varnexa.lingdongaff.com</code>）。实际交付的商品套餐、周期资费及用户中心，均以该结算系统当时出具的明细为准。
+        </p>
+      </div>
+
+      <div class="about-actions" style="margin-top: 2rem;">
+        <a href="/" class="btn btn-secondary">返回首页</a>
+        <a href={brand.affiliateUrl} target="_blank" rel="sponsored nofollow noopener" class="btn btn-primary">
+          前往注册与订购 ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb-nav {
+    margin-bottom: 2rem;
+  }
+  .breadcrumb-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .bc-sep { color: var(--divider); }
+  .bc-current { color: var(--text-light); }
+
+  .about-card {
+    background: var(--panel-dark);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 3rem;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+  }
+
+  .about-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 1.5rem;
+  }
+
+  .about-prose {
+    color: #D3E2F4;
+    font-size: 1.05rem;
+    line-height: 1.85;
+  }
+
+  .about-prose h2 {
+    font-size: 1.4rem;
+    color: var(--accent-cyan);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-prose p {
+    margin-bottom: 1.5rem;
+  }
+
+  .about-prose ul {
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-prose strong {
+    color: #fff;
+  }
+
+  .about-actions {
+    display: flex;
+    gap: 1rem;
+    border-top: 1px solid var(--divider);
+    padding-top: 1.5rem;
+  }
+</style>

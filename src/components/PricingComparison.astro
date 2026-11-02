@@ -1,0 +1,407 @@
+---
+import { pricingReconciliation } from '../data/pricing';
+import { brand } from '../data/brand';
+---
+
+<section id="pricing-section" class="pricing-section" aria-labelledby="pricing-title">
+  <div class="container">
+    <div class="pricing-header">
+      <div class="section-tag">
+        <span>04 / PRICING EVIDENCE & CONFLICT AUDIT</span>
+      </div>
+      <h2 id="pricing-title" class="section-title">
+        套餐参考资料比对与订购核验
+      </h2>
+      <p class="section-desc">
+        公开参考站 linkcube.help 与 linkcube.biz 存在显著的价格与规格冲突。本站坚决拒绝混合编造虚假的统一套餐，清晰展示双源差异，并指引进入正式收银台结算系统。
+      </p>
+    </div>
+
+    <!-- Official Checkout Dispatcher Action Card -->
+    <div class="official-checkout-card">
+      <div class="checkout-card-content">
+        <div class="checkout-badge-row">
+          <span class="status-badge status-listed">官方指定分发通道</span>
+          <span class="font-mono" style="font-size: 0.8rem; color: var(--accent-cyan);">ENDPOINT: varnexa.lingdongaff.com</span>
+        </div>
+        <h3 class="checkout-card-title">LinkCube 正式订购与收银台结算入口</h3>
+        <p class="checkout-card-desc">
+          {pricingReconciliation.disclaimer}
+        </p>
+        <div class="checkout-tips">
+          <div class="tip-item">
+            <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" style="color: #FFC069;">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+            </svg>
+            <span>价格确认说明：实际可购买套餐、月流量配额与实时优惠，以进入结算网关后实时列出的商品清单为准。</span>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-card-action">
+        <a
+          href={brand.affiliateUrl}
+          target="_blank"
+          rel="sponsored nofollow noopener"
+          class="btn btn-primary btn-checkout-lg"
+        >
+          <span>进入正式购买与结算</span>
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+            <path fill-rule="evenodd" d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.44 8 6.22 4.28a.75.75 0 0 1 0-1.06z"/>
+          </svg>
+        </a>
+        <span class="checkout-subnote font-mono">保留完整授权代码 · 外部推广通道</span>
+      </div>
+    </div>
+
+    <!-- Dual Source Pricing Conflict Table -->
+    <div class="pricing-comparison-grid">
+      <!-- Source A Column -->
+      <div class="pricing-source-col">
+        <div class="source-col-header">
+          <div class="source-name-badge">
+            <span class="status-badge status-reference">参考源 A</span>
+            <span class="font-mono">linkcube.help</span>
+          </div>
+          <h4 class="source-col-title">技术支持站公开套餐</h4>
+          <p class="source-col-sub">采用经典三档月付阶梯，限制设备较严格</p>
+        </div>
+
+        <div class="tier-cards-list">
+          {pricingReconciliation.sourceA.map((tier) => (
+            <div class="tier-card">
+              <div class="tier-top">
+                <span class="tier-name">{tier.tierName}</span>
+                <div class="tier-price-box">
+                  <span class="tier-price font-mono">{tier.price}</span>
+                  <span class="tier-period">/月</span>
+                </div>
+              </div>
+
+              <div class="tier-specs">
+                <div class="spec-row">
+                  <span class="spec-label">高速流量：</span>
+                  <span class="spec-val font-mono">{tier.traffic}</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">设备额度：</span>
+                  <span class="spec-val font-mono">{tier.devices}</span>
+                </div>
+              </div>
+
+              <div class="tier-conflict-note">
+                <strong>数据冲突核查：</strong>
+                <span>{tier.conflictNotes}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Source B Column -->
+      <div class="pricing-source-col">
+        <div class="source-col-header">
+          <div class="source-name-badge">
+            <span class="status-badge status-reference">参考源 B</span>
+            <span class="font-mono">linkcube.biz</span>
+          </div>
+          <h4 class="source-col-title">品牌推介站公开套餐</h4>
+          <p class="source-col-sub">营销导向明显，同价位流量成倍增加，声称不限设备</p>
+        </div>
+
+        <div class="tier-cards-list">
+          {pricingReconciliation.sourceB.map((tier) => (
+            <div class="tier-card">
+              <div class="tier-top">
+                <span class="tier-name">{tier.tierName}</span>
+                <div class="tier-price-box">
+                  <span class="tier-price font-mono">{tier.price}</span>
+                  <span class="tier-period">/{tier.period.includes('年') ? '年' : '月'}</span>
+                </div>
+              </div>
+
+              <div class="tier-specs">
+                <div class="spec-row">
+                  <span class="spec-label">高速流量：</span>
+                  <span class="spec-val font-mono">{tier.traffic}</span>
+                </div>
+                <div class="spec-row">
+                  <span class="spec-label">设备额度：</span>
+                  <span class="spec-val font-mono">{tier.devices}</span>
+                </div>
+              </div>
+
+              <div class="tier-conflict-note">
+                <strong>数据冲突核查：</strong>
+                <span>{tier.conflictNotes}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing-article-lead">
+      <div class="lead-icon">
+        <svg viewBox="0 0 20 20" width="20" height="20" fill="currentColor" style="color: var(--accent-cyan);">
+          <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+        </svg>
+      </div>
+      <div class="lead-text">
+        <strong>深度核验指南：</strong>
+        <span>想进一步了解为什么不同网站价格不同？阅读我们的专门分析文章：</span>
+        <a href="/guides/linkcube-pricing-sources/" class="lead-link">
+          《LinkCube 套餐价格为什么不同？2026 年公开资料对照与购买前核验方法》 ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .pricing-header {
+    margin-bottom: 3rem;
+  }
+
+  .official-checkout-card {
+    background: linear-gradient(135deg, rgba(20, 46, 73, 0.9) 0%, rgba(10, 25, 45, 0.95) 100%);
+    border: 1px solid var(--accent-cyan);
+    border-radius: 12px;
+    padding: 2.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 3.5rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(108, 221, 233, 0.12);
+  }
+
+  .checkout-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 720px;
+  }
+
+  .checkout-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .checkout-card-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-light);
+  }
+
+  .checkout-card-desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .checkout-tips {
+    background: rgba(8, 23, 43, 0.6);
+    border-left: 3px solid #FFC069;
+    padding: 0.6rem 0.9rem;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .tip-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--text-light);
+  }
+
+  .checkout-card-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .btn-checkout-lg {
+    padding: 0.9rem 2rem;
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
+
+  .checkout-subnote {
+    font-size: 0.72rem;
+    color: #7B8CA3;
+  }
+
+  .pricing-comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .pricing-source-col {
+    background: var(--panel-dark);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .source-col-header {
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .source-name-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .source-col-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+
+  .source-col-sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .tier-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .tier-card {
+    background: var(--card-dark);
+    border: 1px solid rgba(41, 79, 105, 0.4);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tier-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(41, 79, 105, 0.3);
+    padding-bottom: 0.5rem;
+  }
+
+  .tier-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+
+  .tier-price-box {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .tier-price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent-cyan);
+  }
+
+  .tier-period {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .tier-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .spec-label {
+    color: var(--text-muted);
+  }
+
+  .spec-val {
+    color: var(--text-light);
+    font-weight: 600;
+  }
+
+  .tier-conflict-note {
+    background: rgba(8, 23, 43, 0.6);
+    border-left: 2px solid #E09F3E;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: #AFC4DD;
+  }
+
+  .tier-conflict-note strong {
+    color: #FFC069;
+  }
+
+  .pricing-article-lead {
+    background: rgba(16, 38, 63, 0.6);
+    border: 1px dashed var(--divider);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lead-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+  }
+
+  .lead-link {
+    color: var(--accent-cyan);
+    font-weight: 600;
+    margin-left: 0.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .official-checkout-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+    .checkout-card-action {
+      width: 100%;
+    }
+    .btn-checkout-lg {
+      width: 100%;
+    }
+    .pricing-comparison-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

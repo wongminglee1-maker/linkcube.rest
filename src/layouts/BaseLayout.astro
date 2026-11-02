@@ -1,0 +1,106 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SourcePanel from '../components/SourcePanel.astro';
+import { brand } from '../data/brand';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogType?: string;
+  ogImage?: string;
+  schema?: object | object[];
+}
+
+const {
+  title = "LinkCube官网｜LinkCube机场节点地区、线路数据与测速分析指南 2026",
+  description = "了解 LinkCube 机场公开的节点地区、线路概念与套餐信息，查看香港、日本、新加坡、美国节点资料，以及延迟、丢包、分时段数据和网络测试方法。",
+  canonical = brand.canonicalUrl + Astro.url.pathname,
+  ogType = "website",
+  ogImage = "https://linkcube.rest/images/og-data-story.svg",
+  schema
+} = Astro.props;
+
+// Default structured data for WebSite and Organization
+const defaultWebSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "LinkCube Data Story 官网",
+  "alternateName": ["LinkCube", "绿叶 LinkCube", "LinkCube机场"],
+  "url": brand.canonicalUrl,
+  "description": brand.metaDescription,
+  "inLanguage": "zh-CN"
+};
+
+const defaultOrgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "LinkCube",
+  "url": brand.canonicalUrl,
+  "logo": "https://linkcube.rest/favicon.svg"
+};
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:type" content={ogType}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:image" content={ogImage}>
+  <meta property="og:site_name" content="LinkCube 官网">
+  <meta property="og:locale" content="zh_CN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Global & Component Styles -->
+  <link rel="stylesheet" href="/styles/global.css">
+  <link rel="stylesheet" href="/styles/data-story.css">
+  <link rel="stylesheet" href="/styles/chart.css">
+  <link rel="stylesheet" href="/styles/animations.css">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(defaultWebSiteSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(defaultOrgSchema)} />
+  {schema && (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  )}
+</head>
+<body>
+  <Header />
+
+  <main id="main-content">
+    <slot />
+  </main>
+
+  <SourcePanel />
+  <Footer />
+
+  <!-- Global scripts -->
+  <script src="../scripts/chart-reveal.ts"></script>
+  <script src="../scripts/source-tooltip.ts"></script>
+</body>
+</html>
+
+<style is:global>
+  @import "../styles/global.css";
+  @import "../styles/data-story.css";
+  @import "../styles/chart.css";
+  @import "../styles/animations.css";
+</style>

@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PricingComparison from '../components/PricingComparison.astro';
+import { brand } from '../data/brand';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": brand.canonicalUrl + "/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "套餐对比与核验",
+      "item": brand.canonicalUrl + "/pricing/"
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="LinkCube 套餐价格对比与结算核验 2026 - 双源资料对照"
+  description="客观对比 linkcube.help 与 linkcube.biz 的公开套餐差异，核验月付与年付资费、流量配额与设备限制冲突，提供官方正规收银台接入入口。"
+  canonical={`${brand.canonicalUrl}/pricing/`}
+  schema={breadcrumbSchema}
+>
+  <div class="pricing-page-wrapper">
+    <div class="container" style="padding-top: 2.5rem;">
+      <nav class="breadcrumb-nav" aria-label="页面路径导航">
+        <ol class="breadcrumb-list">
+          <li><a href="/">首页</a></li>
+          <li><span class="bc-sep">/</span></li>
+          <li aria-current="page"><span class="bc-current">套餐对比与核验</span></li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Pricing Comparison Component -->
+    <PricingComparison />
+
+    <!-- Additional Guidance Section -->
+    <div class="container" style="padding-bottom: 5rem;">
+      <div class="pricing-advice-card">
+        <h3 class="advice-title">购买前核实 checklist（避坑清单）</h3>
+        <ul class="advice-list">
+          <li><strong>确认结算域名归属</strong>：务必核对支付界面是否为官方授权的安全网关（如 varnexa.lingdongaff.com 调度通道），防止在非加密镜像钓鱼站输入敏感密码。</li>
+          <li><strong>查验流量重置周期</strong>：不同套餐可能分为“按自然月重置”、“按订购日 30 天周期重置”或“一次性流量包”，购买前需在商品描述中核实。</li>
+          <li><strong>了解倍率计费规则</strong>：部分高级专线节点可能会以 1.5x~2.0x 扣除流量配额。如果主要使用高倍率节点，实际可用流量会相应折算。</li>
+          <li><strong>以最终结算清单为准</strong>：无论外部第三方博文标写何种促销价格，最终应付金额与包含权益以收银台当时显示的实时账单为准。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .pricing-page-wrapper {
+    background: var(--bg-dark);
+  }
+
+  .breadcrumb-nav {
+    margin-bottom: 1.5rem;
+  }
+
+  .breadcrumb-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .bc-sep {
+    color: var(--divider);
+  }
+
+  .bc-current {
+    color: var(--text-light);
+  }
+
+  .pricing-advice-card {
+    background: var(--panel-dark);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .advice-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 0.75rem;
+  }
+
+  .advice-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .advice-list strong {
+    color: var(--accent-cyan);
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { brand } from '../data/brand';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": brand.canonicalUrl + "/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "服务条款",
+      "item": brand.canonicalUrl + "/terms/"
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="LinkCube 服务条款 (Terms of Service) - linkcube.rest"
+  description="LinkCube 数据落地页服务条款，阐明站点性质、数据引用限制、知识产权与免责声明。"
+  canonical={`${brand.canonicalUrl}/terms/`}
+  schema={breadcrumbSchema}
+>
+  <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+    <nav class="breadcrumb-nav" aria-label="页面路径导航">
+      <ol class="breadcrumb-list">
+        <li><a href="/">首页</a></li>
+        <li><span class="bc-sep">/</span></li>
+        <li aria-current="page"><span class="bc-current">服务条款</span></li>
+      </ol>
+    </nav>
+
+    <div class="legal-card">
+      <h1 class="legal-title">服务条款 (Terms of Service)</h1>
+      <p class="legal-date font-mono">最后修订生效日期：2026 年 10 月 31 日</p>
+
+      <div class="legal-content">
+        <p>
+          欢迎访问 LinkCube (linkcube.rest，以下简称“本站”)。使用或浏览本站内容即表示您完全理解并同意遵守以下条款。若您不同意本条款的任何部分，请停止使用本站。
+        </p>
+
+        <h2>1. 网站性质与信息定位</h2>
+        <p>
+          本站是由独立技术团队设立的 LinkCube 品牌风格数据落地页与技术科普中心。本站旨在依据公开资料，客观呈现网络节点地区、传输线路原理及数据核验方法。本站<strong>不经营非法网络接入业务</strong>，亦不提供任何破坏网络安全的非法工具下载。
+        </p>
+
+        <h2>2. 数据免责声明</h2>
+        <p>
+          本站所展示的全部公开参考资料（包括来自 linkcube.help 与 linkcube.biz 的套餐规格）均严格标注数据状态（如 REFERENCE_ONLY）。由于跨国网络链路受到海底光缆状态、公网运营商路由调度及不可抗力的动态影响，本站所列之技术原理解析与参考数据<strong>不构成任何形式的商业保证或可用性承诺</strong>。
+        </p>
+
+        <h2>3. 外部购买与结算系统声明</h2>
+        <p>
+          用户通过本站注册按钮或购买链接进入外部结算调度系统（如 <code>varnexa.lingdongaff.com</code>）后，所有的账户开通、资金交易、商品交付与售后工单，均由该独立运营的结算平台直接承担法律与合约责任。用户在付款前应当仔细核对其收银台实时列出的服务规格与退换款条款。
+        </p>
+
+        <h2>4. 知识产权保护</h2>
+        <p>
+          本站发布的六篇深度原创技术文章、原创 SVG 拓扑矢量图及交互脚本，均受相关著作权法规保护。未经本站明确书面许可，严禁任何第三方网站进行整篇机械式爬取、复制或用于生成虚假测评诱导。
+        </p>
+      </div>
+
+      <div style="margin-top: 2rem; border-top: 1px solid var(--divider); padding-top: 1rem;">
+        <a href="/" class="btn btn-secondary">返回首页</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .breadcrumb-nav { margin-bottom: 2rem; }
+  .breadcrumb-list { list-style: none; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); }
+  .bc-sep { color: var(--divider); }
+  .bc-current { color: var(--text-light); }
+
+  .legal-card {
+    background: var(--panel-dark);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 3rem;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .legal-title { font-size: 2.2rem; font-weight: 800; color: var(--text-light); margin-bottom: 0.5rem; }
+  .legal-date { font-size: 0.85rem; color: var(--accent-cyan); margin-bottom: 2rem; border-bottom: 1px solid var(--divider); padding-bottom: 1rem; }
+  .legal-content { color: #D3E2F4; font-size: 1rem; line-height: 1.8; }
+  .legal-content h2 { font-size: 1.3rem; color: var(--text-light); margin-top: 1.75rem; margin-bottom: 0.75rem; }
+  .legal-content p { margin-bottom: 1.25rem; }
+</style>

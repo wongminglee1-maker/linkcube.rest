@@ -1,0 +1,263 @@
+---
+import { brand } from '../data/brand';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand-logo" aria-label="LinkCube 首页">
+      <div class="logo-icon">
+        <svg viewBox="0 0 36 36" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="36" height="36" rx="8" fill="#10263F" stroke="#294F69" stroke-width="1.5"/>
+          <path d="M18 7L28 13V23L18 29L8 23V13L18 7Z" stroke="#6CDDE9" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M18 7V18M18 18L28 23M18 18L8 23" stroke="#3C92D4" stroke-width="1.5"/>
+          <circle cx="18" cy="18" r="3" fill="#6CDDE9"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">{brand.name}</span>
+        <span class="brand-sub">DATA STORY</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" aria-label="主导航">
+      <ul class="nav-list">
+        <li><a href="/" class="nav-link">首页</a></li>
+        <li><a href="/regions/" class="nav-link">地区资料</a></li>
+        <li><a href="/#routing" class="nav-link">线路说明</a></li>
+        <li><a href="/#data-reports" class="nav-link">数据报告</a></li>
+        <li><a href="/pricing/" class="nav-link">套餐</a></li>
+        <li><a href="/guides/" class="nav-link">文章中心</a></li>
+        <li><a href="/#faq" class="nav-link">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a
+        href={brand.affiliateUrl}
+        target="_blank"
+        rel="sponsored nofollow noopener"
+        class="btn btn-primary btn-sm register-btn"
+      >
+        <span>立即注册</span>
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+          <path fill-rule="evenodd" d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.44 8 6.22 4.28a.75.75 0 0 1 0-1.06z"/>
+        </svg>
+      </a>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        id="mobile-menu-toggle"
+        class="mobile-menu-btn"
+        aria-label="切换移动端导航菜单"
+        aria-expanded="false"
+        aria-controls="mobile-nav-drawer"
+      >
+        <svg class="hamburger-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
+  <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="移动端快捷导航">
+    <div class="drawer-header">
+      <div class="brand-text">
+        <span class="brand-name">{brand.name}</span>
+        <span class="brand-sub">移动导航</span>
+      </div>
+    </div>
+    <nav class="mobile-nav-content">
+      <ul class="mobile-nav-list">
+        <li><a href="/" class="mobile-nav-link">首页</a></li>
+        <li><a href="/regions/" class="mobile-nav-link">地区资料总览</a></li>
+        <li><a href="/#routing" class="mobile-nav-link">线路结构说明</a></li>
+        <li><a href="/#data-reports" class="mobile-nav-link">真实数据报告</a></li>
+        <li><a href="/pricing/" class="mobile-nav-link">套餐比对与说明</a></li>
+        <li><a href="/guides/" class="mobile-nav-link">原创技术文章</a></li>
+        <li><a href="/data-methodology/" class="mobile-nav-link">数据质量与方法论</a></li>
+        <li><a href="/#faq" class="mobile-nav-link">常见问题 FAQ</a></li>
+      </ul>
+      <div class="drawer-footer">
+        <a
+          href={brand.affiliateUrl}
+          target="_blank"
+          rel="sponsored nofollow noopener"
+          class="btn btn-primary"
+          style="width: 100%;"
+        >
+          立即注册与订购
+        </a>
+      </div>
+    </nav>
+  </aside>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8, 23, 43, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--divider);
+    height: 70px;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand-name {
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    color: var(--text-light);
+    line-height: 1.1;
+  }
+
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent-cyan);
+    letter-spacing: 0.12em;
+  }
+
+  .desktop-nav {
+    display: flex;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--accent-cyan);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    color: var(--text-light);
+    padding: 0.5rem;
+  }
+
+  /* Mobile Drawer Styles */
+  .mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-nav-overlay.is-visible {
+    display: block;
+    opacity: 1;
+  }
+
+  .mobile-nav-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--panel-dark);
+    border-left: 1px solid var(--divider);
+    z-index: 160;
+    transform: translateX(100%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .mobile-nav-drawer.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .drawer-header {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 1.5rem;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.4rem 0;
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--accent-cyan);
+  }
+
+  .drawer-footer {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--divider);
+  }
+
+  @media (max-width: 880px) {
+    .desktop-nav {
+      display: none;
+    }
+    .mobile-menu-btn {
+      display: block;
+    }
+  }
+</style>
+<script src="../scripts/mobile-nav.ts"></script>

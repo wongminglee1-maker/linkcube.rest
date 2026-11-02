@@ -1,0 +1,611 @@
+---
+import { regionsData } from '../data/regions';
+---
+
+<section id="regions-story" class="regions-story-section" aria-labelledby="story-section-title">
+  <div class="container">
+    <div class="story-section-intro">
+      <div class="section-tag">
+        <span>02 / DATA STORY SCROLL · 深度滚动叙事</span>
+      </div>
+      <h2 id="story-section-title" class="section-title">
+        四个核心地区：技术原理解析与证据追踪
+      </h2>
+      <p class="section-desc">
+        分区域解析各网络枢纽的物理传输机理与典型使用场景，右侧同步展示对应的核验状态、元数据与待核实字段清单。
+      </p>
+    </div>
+
+    <!-- Sticky Navigation Bar for quick jumping across regions -->
+    <div class="story-sticky-nav-bar" role="navigation" aria-label="地区快速导航">
+      <div class="nav-bar-label">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-cyan);">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span>枢纽导航</span>
+      </div>
+      <div class="nav-bar-tabs" role="tablist">
+        {regionsData.map((region, index) => (
+          <button
+            class={`region-nav-tab ${index === 0 ? 'is-active' : ''}`}
+            role="tab"
+            aria-selected={index === 0 ? 'true' : 'false'}
+            data-target-region={region.id}
+          >
+            <span class="tab-idx">{region.orderNumber}</span>
+            <span class="tab-name">{region.regionName}</span>
+          </button>
+        ))}
+      </div>
+      <div class="nav-bar-badge">
+        <span class="status-badge status-reference">核验标准: REFERENCE_ONLY</span>
+      </div>
+    </div>
+
+    <!-- Region Cards Grid: 4 neatly aligned paired rows -->
+    <div class="region-cards-container">
+      {regionsData.map((region, index) => (
+        <article
+          class={`region-story-card ${index === 0 ? 'is-active' : ''}`}
+          data-region={region.id}
+          id={`story-${region.id}`}
+        >
+          <!-- Left Column: Scene & Network Engineering Principles -->
+          <div class="story-card-left">
+            <div class="card-top-bar">
+              <div class="card-number-tag">{region.orderNumber}</div>
+              <div class="card-meta-tags">
+                <span class="country-pill">{region.countryCode} · {region.englishName}</span>
+                <span class="category-pill">网络枢纽</span>
+              </div>
+            </div>
+
+            <h3 class="region-heading">{region.regionName}</h3>
+            
+            <p class="region-lead-text">
+              {region.scenarioDescription}
+            </p>
+
+            <div class="region-principle-box">
+              <div class="principle-box-title">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-cyan); flex-shrink: 0;">
+                  <polyline points="16 18 22 12 16 6"/>
+                  <polyline points="8 6 2 12 8 18"/>
+                </svg>
+                <span>网络工程常识原理解析</span>
+              </div>
+              <p>{region.networkPrinciple}</p>
+            </div>
+
+            <div class="card-footer-info">
+              <div class="status-inline">
+                <span class="status-badge status-reference">核验状态：{region.evidenceStatus}</span>
+                <span class="font-mono text-muted-xs">复核时间: {region.verifiedAt}</span>
+              </div>
+              <div class="source-inline">
+                <span class="source-lbl">资料来源：</span>
+                <a
+                  href={region.sourceURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="source-pill"
+                >
+                  {region.sourceURL} ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Real-time Evidence Audit & Missing Fields Checklist -->
+          <div class="story-card-right">
+            <div class="audit-card-top">
+              <div class="audit-card-title">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-cyan); flex-shrink: 0;">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+                <span>实时证据审计看板</span>
+              </div>
+              <span class="status-badge status-reference">待测速记录接入</span>
+            </div>
+
+            <!-- 2x2 Meta Grid: All cells tidy and aligned -->
+            <div class="panel-meta-grid">
+              <div class="panel-meta-cell">
+                <span class="cell-label">出口枢纽</span>
+                <span class="cell-val">{region.regionName} ({region.countryCode})</span>
+              </div>
+              <div class="panel-meta-cell">
+                <span class="cell-label">落地城市</span>
+                <span class="cell-val">{region.city || '未指定具体城市'}</span>
+              </div>
+              <div class="panel-meta-cell">
+                <span class="cell-label">线路技术提及</span>
+                <span class="cell-val">BGP / IPLC / IEPL (公开文案)</span>
+              </div>
+              <div class="panel-meta-cell">
+                <span class="cell-label">实测图表状态</span>
+                <span class="cell-val unmeasured-flag">暂无可复核原始记录</span>
+              </div>
+            </div>
+
+            <!-- Missing fields audit box -->
+            <div class="data-audit-box">
+              <div class="data-audit-title">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="flex-shrink: 0;">
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <span>待补充核实字段清单 (Missing Evidence Fields)</span>
+              </div>
+              <ul class="missing-fields-list">
+                {region.missingFields.map((field) => (
+                  <li>{field}</li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- Audit Citation Modal Trigger -->
+            <div class="source-citation">
+              <span class="citation-lbl">公开文档检验凭据：</span>
+              <button
+                class="source-link source-tooltip-trigger"
+                data-source-title={`${region.regionName} 待核验依据`}
+                data-source-name="LinkCube 官方支持与知识库站点"
+                data-source-url={region.sourceURL}
+                data-source-date={region.verifiedAt}
+                data-source-status="REFERENCE_ONLY (仅供参考)"
+                data-source-status-class="status-reference"
+                data-source-fields="地区场景、线路技术提及"
+                data-source-limits="仅代表品牌文档意向，不作为实时物理链路承诺"
+              >
+                查看审计凭证 ↗
+              </button>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .regions-story-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .story-section-intro {
+    margin-bottom: 2.5rem;
+  }
+
+  /* Sticky Navigation Bar across the 4 regions */
+  .story-sticky-nav-bar {
+    position: sticky;
+    top: 4.5rem;
+    z-index: 25;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: rgba(8, 23, 43, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    padding: 0.6rem 1.25rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 20px rgba(4, 13, 24, 0.4);
+  }
+
+  .nav-bar-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+
+  .nav-bar-tabs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-bar-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .region-nav-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: rgba(20, 46, 73, 0.5);
+    color: var(--text-muted);
+    border: 1px solid var(--divider);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .region-nav-tab .tab-idx {
+    font-family: var(--font-mono);
+    color: var(--accent-cyan);
+    font-size: 0.75rem;
+  }
+
+  .region-nav-tab:hover {
+    color: var(--text-light);
+    border-color: var(--accent-blue);
+    background: rgba(26, 60, 94, 0.7);
+  }
+
+  .region-nav-tab.is-active {
+    background: var(--accent-blue);
+    color: #fff;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 12px rgba(108, 221, 233, 0.25);
+  }
+
+  .region-nav-tab.is-active .tab-idx {
+    color: #fff;
+  }
+
+  .nav-bar-badge {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Region Cards Container */
+  .region-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* Each region is a paired 2-column card */
+  .region-story-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    background: rgba(16, 38, 63, 0.4);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    scroll-margin-top: 9rem;
+  }
+
+  .region-story-card.is-active {
+    border-color: var(--accent-cyan);
+    background: rgba(16, 38, 63, 0.65);
+    box-shadow: 0 8px 32px rgba(8, 23, 43, 0.6), 0 0 0 1px rgba(108, 221, 233, 0.3);
+  }
+
+  /* Left Column */
+  .story-card-left {
+    display: flex;
+    flex-direction: column;
+    background: rgba(8, 23, 43, 0.5);
+    border: 1px solid rgba(41, 79, 105, 0.4);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+
+  .card-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-number-tag {
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: rgba(108, 221, 233, 0.4);
+    line-height: 1;
+  }
+
+  .region-story-card.is-active .card-number-tag {
+    color: var(--accent-cyan);
+  }
+
+  .card-meta-tags {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .country-pill {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-cyan);
+    background: rgba(20, 46, 73, 0.6);
+    border: 1px solid rgba(108, 221, 233, 0.3);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .category-pill {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: rgba(20, 46, 73, 0.3);
+    border: 1px solid var(--divider);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .region-heading {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+  }
+
+  .region-lead-text {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .region-principle-box {
+    background: rgba(4, 13, 24, 0.6);
+    border-left: 3px solid var(--accent-blue);
+    border-top: 1px solid rgba(41, 79, 105, 0.3);
+    border-right: 1px solid rgba(41, 79, 105, 0.3);
+    border-bottom: 1px solid rgba(41, 79, 105, 0.3);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+
+  .principle-box-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+
+  .region-principle-box p {
+    font-size: 0.88rem;
+    color: #cadbee;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .card-footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(41, 79, 105, 0.3);
+  }
+
+  .status-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .text-muted-xs {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .source-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .source-lbl {
+    white-space: nowrap;
+  }
+
+  .source-pill {
+    background: rgba(20, 46, 73, 0.6);
+    border: 1px solid var(--divider);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-cyan);
+    word-break: break-all;
+  }
+
+  .source-pill:hover {
+    border-color: var(--accent-cyan);
+  }
+
+  /* Right Column */
+  .story-card-right {
+    display: flex;
+    flex-direction: column;
+    background: rgba(8, 23, 43, 0.5);
+    border: 1px solid rgba(41, 79, 105, 0.4);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+
+  .audit-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .audit-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .panel-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+  }
+
+  .panel-meta-cell {
+    background: rgba(4, 13, 24, 0.6);
+    border: 1px solid rgba(41, 79, 105, 0.4);
+    border-radius: 6px;
+    padding: 0.6rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .cell-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .cell-val {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-light);
+  }
+
+  .unmeasured-flag {
+    color: #FFC069;
+    font-style: italic;
+  }
+
+  .data-audit-box {
+    background: rgba(4, 13, 24, 0.7);
+    border: 1px dashed rgba(255, 192, 105, 0.4);
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+
+  .data-audit-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #FFC069;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .missing-fields-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .missing-fields-list li {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .missing-fields-list li::before {
+    content: "—";
+    color: #FFC069;
+    font-weight: 700;
+  }
+
+  .source-citation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 0.85rem;
+    background: rgba(20, 46, 73, 0.3);
+    border-radius: 6px;
+    border: 1px solid rgba(41, 79, 105, 0.5);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: auto;
+  }
+
+  .citation-lbl {
+    font-size: 0.78rem;
+  }
+
+  .source-citation button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* Responsive layout */
+  @media (max-width: 992px) {
+    .region-story-card {
+      grid-template-columns: 1fr;
+      padding: 1.25rem;
+      gap: 1.25rem;
+    }
+
+    .story-sticky-nav-bar {
+      top: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-bar-badge {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .panel-meta-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .story-sticky-nav-bar {
+      padding: 0.5rem 0.75rem;
+    }
+
+    .region-nav-tab {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+
+<script src="../scripts/story-scroll.ts"></script>

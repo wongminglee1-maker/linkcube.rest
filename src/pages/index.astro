@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DataHero from '../components/DataHero.astro';
+import RegionOverview from '../components/RegionOverview.astro';
+import RegionStory from '../components/RegionStory.astro';
+import RoutingArchitecture from '../components/RoutingArchitecture.astro';
+import LatencyChart from '../components/LatencyChart.astro';
+import TimeSeriesChart from '../components/TimeSeriesChart.astro';
+import DataLegend from '../components/DataLegend.astro';
+import PricingComparison from '../components/PricingComparison.astro';
+import ReviewGrid from '../components/ReviewGrid.astro';
+import ArticleGrid from '../components/ArticleGrid.astro';
+import FAQ from '../components/FAQ.astro';
+import { brandFeatures } from '../data/brand';
+---
+
+<BaseLayout>
+  <!-- 01. Data Hero -->
+  <DataHero />
+
+  <!-- 02. Region Overview -->
+  <RegionOverview />
+
+  <!-- 03. 4-Region Story Narrative Scrolling -->
+  <RegionStory />
+
+  <!-- 04. Routing Architecture Diagram & Concepts -->
+  <RoutingArchitecture />
+
+  <!-- 05. Data Charts Section -->
+  <section id="data-reports" class="data-reports-section" aria-labelledby="reports-title">
+    <div class="container">
+      <div class="reports-header">
+        <div class="section-tag">
+          <span>04 / REAL MEASUREMENT SPECIFICATION</span>
+        </div>
+        <h2 id="reports-title" class="section-title">
+          网络测速数据报告与时序指标
+        </h2>
+        <p class="section-desc">
+          提供分地区节点延迟对比、分时段时序变化、丢包率与下行带宽吞吐视图。所有图表严格绑定实际数据源，缺失值如实标空，配备可访问的 HTML 表格替代视图。
+        </p>
+      </div>
+
+      <!-- Chart A & C -->
+      <LatencyChart />
+
+      <!-- Chart B & D -->
+      <TimeSeriesChart />
+
+      <!-- Data Benchmark & Units Legend -->
+      <DataLegend />
+    </div>
+  </section>
+
+  <!-- 06. Pricing Comparison & Source Audit -->
+  <PricingComparison />
+
+  <!-- 07. Brand Features (Data Transparency, Routing Knowledge, Traceable Metrics) -->
+  <section class="brand-features-section" aria-labelledby="features-title">
+    <div class="container">
+      <div class="features-header">
+        <div class="section-tag">
+          <span>CORE VALUES · 品牌理念</span>
+        </div>
+        <h2 id="features-title" class="section-title">
+          LinkCube 数据诚信与技术原则
+        </h2>
+        <p class="section-desc">
+          我们倡导透明、理性的网络工程文化。拒绝将营销夸大转化为虚假承诺，坚信真实可追溯的数据才是建立信任的基石。
+        </p>
+      </div>
+
+      <div class="features-grid">
+        {brandFeatures.map((feat) => (
+          <div class="feature-card">
+            <span class="feature-tag font-mono">{feat.tag}</span>
+            <h3 class="feature-title">{feat.title}</h3>
+            <p class="feature-desc">{feat.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 08. User Evaluation 6-card Grid -->
+  <ReviewGrid />
+
+  <!-- 09. 6-Article Knowledge Center -->
+  <ArticleGrid />
+
+  <!-- 10. 10-Item FAQ -->
+  <FAQ />
+</BaseLayout>
+
+<style>
+  .data-reports-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background: #08172B;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .reports-header {
+    margin-bottom: 3rem;
+  }
+
+  .brand-features-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background: #071324;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .features-header {
+    margin-bottom: 3rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .feature-card {
+    background: var(--panel-dark);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-cyan);
+  }
+
+  .feature-tag {
+    font-size: 0.75rem;
+    color: var(--accent-cyan);
+    letter-spacing: 0.08em;
+  }
+
+  .feature-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+
+  .feature-desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 900px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

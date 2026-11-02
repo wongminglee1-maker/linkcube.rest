@@ -1,0 +1,54 @@
+<svg viewBox="0 0 1200 630" width="1200" height="630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08172B"/>
+      <stop offset="50%" stop-color="#10263F"/>
+      <stop offset="100%" stop-color="#050D1A"/>
+    </linearGradient>
+    <linearGradient id="glow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3C92D4"/>
+      <stop offset="100%" stop-color="#6CDDE9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)"/>
+
+  <!-- Geometric Grid & Borders -->
+  <line x1="60" y1="530" x2="1140" y2="530" stroke="#294F69" stroke-width="1.5"/>
+  <line x1="60" y1="100" x2="60" y2="530" stroke="#294F69" stroke-width="1.5"/>
+
+  <!-- Brand Logo -->
+  <g transform="translate(100, 100)">
+    <rect width="64" height="64" rx="14" fill="#142E49" stroke="#294F69" stroke-width="2"/>
+    <path d="M32 12L50 23V43L32 54L14 43V23L32 12Z" stroke="#6CDDE9" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="32" cy="32" r="5" fill="#6CDDE9"/>
+    <text x="84" y="44" fill="#EAF4FF" font-size="34" font-weight="800" font-family="sans-serif">LinkCube</text>
+    <text x="238" y="44" fill="#6CDDE9" font-size="18" font-family="monospace" letter-spacing="4">DATA STORY</text>
+  </g>
+
+  <!-- Main Headline -->
+  <text x="100" y="260" fill="#EAF4FF" font-size="46" font-weight="800" font-family="sans-serif">
+    看懂节点地区，让数据说明连接
+  </text>
+  <text x="100" y="320" fill="#AFC4DD" font-size="24" font-family="sans-serif">
+    香港 · 日本 · 新加坡 · 美国 · 分时段延迟 · 线路结构解析
+  </text>
+
+  <!-- Pill tags -->
+  <g transform="translate(100, 380)">
+    <rect width="210" height="42" rx="6" fill="#142E49" stroke="#6CDDE9"/>
+    <text x="105" y="27" fill="#6CDDE9" font-size="15" font-weight="700" text-anchor="middle" font-family="sans-serif">BGP / IPLC / IEPL</text>
+
+    <rect x="230" width="210" height="42" rx="6" fill="#142E49" stroke="#3C92D4"/>
+    <text x="335" y="27" fill="#EAF4FF" font-size="15" font-weight="700" text-anchor="middle" font-family="sans-serif">晚高峰稳定性对比</text>
+
+    <rect x="460" width="210" height="42" rx="6" fill="#142E49" stroke="#FFBE42"/>
+    <text x="565" y="27" fill="#FFBE42" font-size="15" font-weight="700" text-anchor="middle" font-family="sans-serif">双源套餐价格核验</text>
+  </g>
+
+  <!-- Footer link -->
+  <text x="100" y="500" fill="#7B8CA3" font-size="18" font-family="monospace">
+    OFFICIAL DATA STORY SITE · HTTPS://LINKCUBE.REST
+  </text>
+</svg>

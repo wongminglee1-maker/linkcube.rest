@@ -1,0 +1,298 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { regionsData } from '../../data/regions';
+import { brand } from '../../data/brand';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": brand.canonicalUrl + "/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "地区资料总览",
+      "item": brand.canonicalUrl + "/regions/"
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="LinkCube 地区资料与出口节点核验目录 2026"
+  description="深度查阅 LinkCube 涉及的中国香港、日本东京、新加坡与美国西海岸节点资料，了解物理延迟、海缆路径、出口识别及缺失凭证清单。"
+  canonical={`${brand.canonicalUrl}/regions/`}
+  schema={breadcrumbSchema}
+>
+  <div class="regions-page-container">
+    <div class="container">
+      <nav class="breadcrumb-nav" aria-label="页面路径导航">
+        <ol class="breadcrumb-list">
+          <li><a href="/">首页</a></li>
+          <li><span class="bc-sep">/</span></li>
+          <li aria-current="page"><span class="bc-current">地区资料总览</span></li>
+        </ol>
+      </nav>
+
+      <div class="regions-hero">
+        <div class="section-tag">
+          <span>REGION ARCHIVE · 地区资料归档</span>
+        </div>
+        <h1 class="section-title">
+          LinkCube 节点地区资料与证据核验目录
+        </h1>
+        <p class="section-desc">
+          我们坚持将“公开宣传提及”与“经抓包验证的物理节点”严格区分。本目录详细列明香港、日本、新加坡及美国的网络拓扑特征、适用业务场景以及待补充的核验字段。
+        </p>
+      </div>
+
+      <div class="regions-detail-list">
+        {regionsData.map((region) => (
+          <section id={region.id} class="region-detail-section">
+            <div class="region-detail-header">
+              <div class="region-num-box font-mono">{region.orderNumber}</div>
+              <div class="region-title-box">
+                <div class="region-badges-row">
+                  <span class="status-badge status-reference">核验状态：{region.evidenceStatus}</span>
+                  <span class="font-mono" style="font-size: 0.8rem; color: var(--text-muted);">
+                    国家代码: {region.countryCode} · 城市: {region.city || '待指定'}
+                  </span>
+                </div>
+                <h2 class="region-name-main">{region.regionName} ({region.englishName})</h2>
+              </div>
+            </div>
+
+            <div class="region-content-grid">
+              <div class="content-col-left">
+                <div class="info-block">
+                  <h3 class="info-block-title">主要业务适用场景</h3>
+                  <p class="info-block-text">{region.scenarioDescription}</p>
+                </div>
+
+                <div class="info-block">
+                  <h3 class="info-block-title">网络通信原理解析</h3>
+                  <p class="info-block-text">{region.networkPrinciple}</p>
+                </div>
+
+                <div class="info-block">
+                  <h3 class="info-block-title">核查状态与来源声明</h3>
+                  <p class="info-block-text">{region.notes}</p>
+                  <div class="source-link-bar">
+                    <span>来源凭证：</span>
+                    <a href={region.sourceURL} target="_blank" rel="noopener noreferrer" class="source-pill">
+                      {region.sourceURL} (核查于 {region.verifiedAt}) ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content-col-right">
+                <div class="missing-audit-card">
+                  <div class="audit-card-top">
+                    <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="color: #FFC069;">
+                      <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                    <span class="audit-card-title">待核实关键字段清单 (Pending Evidence)</span>
+                  </div>
+                  <p class="audit-card-sub">
+                    在取得第三方连续时延抓包日志前，以下字段严格保持空值（Null），绝不擅自填零或臆测：
+                  </p>
+                  <ul class="missing-fields-list">
+                    {region.missingFields.map((field) => (
+                      <li>{field}</li>
+                    ))}
+                  </ul>
+
+                  <div style="margin-top: 1.5rem; border-top: 1px solid var(--divider); padding-top: 1rem;">
+                    <a href="/guides/linkcube-region-evidence/" class="btn btn-secondary btn-sm" style="width: 100%;">
+                      阅读《节点地区怎么看？资料核查指南》 ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .regions-page-container {
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+    background: var(--bg-dark);
+  }
+
+  .breadcrumb-nav {
+    margin-bottom: 2rem;
+  }
+
+  .breadcrumb-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .bc-sep {
+    color: var(--divider);
+  }
+
+  .bc-current {
+    color: var(--text-light);
+  }
+
+  .regions-hero {
+    margin-bottom: 3.5rem;
+  }
+
+  .regions-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .region-detail-section {
+    background: var(--panel-dark);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    scroll-margin-top: 90px;
+  }
+
+  .region-detail-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .region-num-box {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent-cyan);
+    line-height: 1;
+    background: rgba(108, 221, 233, 0.1);
+    border: 1px solid rgba(108, 221, 233, 0.25);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+  }
+
+  .region-title-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .region-badges-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .region-name-main {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--text-light);
+  }
+
+  .region-content-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .content-col-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .info-block-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+  }
+
+  .info-block-text {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .source-link-bar {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .source-pill {
+    background: rgba(20, 46, 73, 0.6);
+    border: 1px solid var(--divider);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-cyan);
+  }
+
+  .missing-audit-card {
+    background: rgba(8, 23, 43, 0.85);
+    border: 1px dashed #FFC069;
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .audit-card-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .audit-card-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #FFC069;
+    letter-spacing: 0.05em;
+  }
+
+  .audit-card-sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .region-content-grid {
+      grid-template-columns: 1fr;
+    }
+    .region-detail-section {
+      padding: 1.75rem;
+    }
+  }
+</style>

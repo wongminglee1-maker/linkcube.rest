@@ -1,0 +1,285 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { brand } from '../data/brand';
+import { timeSlotDefinitions, schemaSampleRecord } from '../data/measurements';
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": brand.canonicalUrl + "/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "数据质量与测试方法论",
+      "item": brand.canonicalUrl + "/data-methodology/"
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="LinkCube 数据质量与测速方法论 - 诚信标准与 Schema 规范"
+  description="详细阐述 LinkCube 数据落地页的质量审核原则，包括五级证据状态、时序时间戳要求、缺失值标空规范、分位数统计及标准化数据模型。"
+  canonical={`${brand.canonicalUrl}/data-methodology/`}
+  schema={breadcrumbSchema}
+>
+  <div class="methodology-page-container">
+    <div class="container">
+      <nav class="breadcrumb-nav" aria-label="页面路径导航">
+        <ol class="breadcrumb-list">
+          <li><a href="/">首页</a></li>
+          <li><span class="bc-sep">/</span></li>
+          <li aria-current="page"><span class="bc-current">数据质量与方法论</span></li>
+        </ol>
+      </nav>
+
+      <div class="methodology-hero">
+        <div class="section-tag">
+          <span>DATA INTEGRITY ARCHITECTURE · 数据工程准则</span>
+        </div>
+        <h1 class="section-title">
+          LinkCube 数据质量审核与网络测速方法论
+        </h1>
+        <p class="section-desc">
+          本站坚决摒弃“全网 0 丢包”、“全国 18ms”等伪造宣传。我们遵循 ISO/IEC 25012 数据质量评价标准，将每一项指标置于严密受控的测试环境与时间序列之下。
+        </p>
+      </div>
+
+      <div class="methodology-sections">
+        <!-- Section 1: 5-level Evidence Hierarchy -->
+        <section class="methodology-block">
+          <h2 class="block-title">一、五级数据证据状态（Evidence Status Hierarchy）</h2>
+          <p class="block-desc">
+            为防止未经复核的商业营销信息误导用户，本站将所有网络数据划分为五个不可逾越的证据层级：
+          </p>
+
+          <div class="status-hierarchy-grid">
+            <div class="hierarchy-card">
+              <span class="status-badge status-reference">1. REFERENCE_ONLY</span>
+              <h3 class="hierarchy-title">仅公开文章提及</h3>
+              <p class="hierarchy-desc">
+                仅在服务商推广文章或使用指南中出现的地区名称，未取得经解密的实时节点清单与服务器 IP，不可作为物理在线凭证。
+              </p>
+            </div>
+
+            <div class="hierarchy-card">
+              <span class="status-badge status-listed">2. LISTED</span>
+              <h3 class="hierarchy-title">节点清单已列出</h3>
+              <p class="hierarchy-desc">
+                已在实际下发的订阅解密配置中提取出有效节点主机名与入站协议，但尚未接入带时间戳的测速探针。
+              </p>
+            </div>
+
+            <div class="hierarchy-card">
+              <span class="status-badge status-verified">3. MEASURED</span>
+              <h3 class="hierarchy-title">具备真实测试记录</h3>
+              <p class="hierarchy-desc">
+                已取得具有单一时间戳与完整测试环境（运营商、带宽、终端）的原始 ICMP/TCP 抓包日志。
+              </p>
+            </div>
+
+            <div class="hierarchy-card">
+              <span class="status-badge status-verified">4. VERIFIED</span>
+              <h3 class="hierarchy-title">完整复核已验证</h3>
+              <p class="hierarchy-desc">
+                跨越早晨、白天与晚高峰完整周期采样（至少连续 7 天），且经过第三方公开哈希对账与环境复现。
+              </p>
+            </div>
+
+            <div class="hierarchy-card">
+              <span class="status-badge status-unavailable">5. UNAVAILABLE</span>
+              <h3 class="hierarchy-title">暂无可核验资料</h3>
+              <p class="hierarchy-desc">
+                暂未取得任何官方文献或公开测速数据，数据字段严格保持 Null，杜绝人工主观填补。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Time Slots & Metrics -->
+        <section class="methodology-block">
+          <h2 class="block-title">二、测试时段与网络度量指标矩阵</h2>
+          <p class="block-desc">
+            所有时间序列必须以 <strong>Asia/Shanghai (UTC+8)</strong> 统一时区对齐，杜绝由于跨国时差产生的数据混淆：
+          </p>
+
+          <div class="timeslot-cards-list">
+            {Object.entries(timeSlotDefinitions).map(([key, def]) => (
+              <div class="slot-card">
+                <div class="slot-badge-row">
+                  <span class="font-mono" style="color: var(--accent-cyan); font-weight: 700;">{key}</span>
+                  <span class="font-mono" style="color: var(--text-light); font-size: 0.85rem;">{def.timeRange}</span>
+                </div>
+                <h3 class="slot-name">{def.label}</h3>
+                <p class="slot-desc">{def.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Section 3: Data Schema Spec -->
+        <section class="methodology-block">
+          <h2 class="block-title">三、标准化数据模型结构规范（JSON Schema Spec）</h2>
+          <p class="block-desc">
+            每一条合规接入的测速原始记录，均必须具备以下完整结构体定义。字段缺失时保留 <code>null</code>，严禁使用 0 代替未测试数据：
+          </p>
+
+          <div class="code-spec-container">
+            <pre class="font-mono"><code>{JSON.stringify(schemaSampleRecord, null, 2)}</code></pre>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .methodology-page-container {
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+    background: var(--bg-dark);
+  }
+
+  .breadcrumb-nav {
+    margin-bottom: 2rem;
+  }
+
+  .breadcrumb-list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .bc-sep {
+    color: var(--divider);
+  }
+
+  .bc-current {
+    color: var(--text-light);
+  }
+
+  .methodology-hero {
+    margin-bottom: 3.5rem;
+  }
+
+  .methodology-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .methodology-block {
+    background: var(--panel-dark);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .block-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 0.75rem;
+  }
+
+  .block-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+  }
+
+  .status-hierarchy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .hierarchy-card {
+    background: var(--card-dark);
+    border: 1px solid rgba(41, 79, 105, 0.4);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .hierarchy-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+
+  .hierarchy-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .timeslot-cards-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .slot-card {
+    background: var(--card-dark);
+    border: 1px solid rgba(41, 79, 105, 0.4);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .slot-badge-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .slot-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+
+  .slot-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .code-spec-container {
+    background: #050D1A;
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .code-spec-container code {
+    color: var(--accent-cyan);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 800px) {
+    .timeslot-cards-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

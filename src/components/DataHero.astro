@@ -1,0 +1,310 @@
+---
+import { brand } from '../data/brand';
+---
+
+<section class="hero-section" aria-labelledby="hero-main-title">
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <div class="section-tag">
+        <span class="pulse-dot"></span>
+        <span>2026 DATA NARRATIVE · 真实数据叙事</span>
+      </div>
+
+      <h1 id="hero-main-title" class="hero-title">
+        {brand.tagline}
+      </h1>
+
+      <p class="hero-subtext">
+        {brand.subTagline}
+      </p>
+
+      <div class="hero-actions">
+        <a href="#regions-story" class="btn btn-primary">
+          <span>探索地区资料</span>
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm10.03-.47a.75.75 0 0 0-1.06-1.06L7.5 8.94 6.03 7.47a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l3.5-3.5z"/>
+          </svg>
+        </a>
+
+        <a href="#pricing-section" class="btn btn-secondary">
+          <span>查看套餐对照</span>
+        </a>
+
+        <a
+          href={brand.affiliateUrl}
+          target="_blank"
+          rel="sponsored nofollow noopener"
+          class="btn btn-primary btn-hero-reg"
+        >
+          <span>立即注册</span>
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path fill-rule="evenodd" d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.44 8 6.22 4.28a.75.75 0 0 1 0-1.06z"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="hero-metrics-strip">
+        <div class="metric-item">
+          <span class="metric-label">公开参考地区</span>
+          <span class="metric-val font-mono">4 大核心枢纽</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-label">数据核验规范</span>
+          <span class="metric-val font-mono">5 级凭据状态</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-label">原创技术文章</span>
+          <span class="metric-val font-mono">6 篇万字长文</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Original SVG Data Grid & Topological Paths (Marked as Visual Schema) -->
+    <div class="hero-visual" aria-hidden="true">
+      <div class="visual-card">
+        <div class="visual-header">
+          <span class="visual-title font-mono">DATA TOPOLOGY SCHEMA</span>
+          <span class="status-badge status-reference">概念拓扑示意</span>
+        </div>
+
+        <div class="svg-container">
+          <svg viewBox="0 0 460 320" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grid-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#142E49" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#08172B" stop-opacity="0.95"/>
+              </linearGradient>
+              <linearGradient id="cyan-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#3C92D4"/>
+                <stop offset="100%" stop-color="#6CDDE9"/>
+              </linearGradient>
+              <pattern id="dot-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="#294F69" opacity="0.6"/>
+              </pattern>
+            </defs>
+
+            <!-- Background Grid -->
+            <rect width="460" height="320" rx="10" fill="url(#grid-grad)"/>
+            <rect width="460" height="320" rx="10" fill="url(#dot-grid)"/>
+
+            <!-- Topological coordinate axes -->
+            <line x1="40" y1="280" x2="420" y2="280" stroke="#294F69" stroke-width="1.5"/>
+            <line x1="40" y1="40" x2="40" y2="280" stroke="#294F69" stroke-width="1.5"/>
+
+            <!-- Abstract Path Nodes representing Entry, Transit, Exits -->
+            <!-- Entry Node: Shenzhen/Guangzhou -->
+            <circle cx="80" cy="220" r="14" fill="#10263F" stroke="#3C92D4" stroke-width="2"/>
+            <circle cx="80" cy="220" r="5" fill="#6CDDE9"/>
+            <text x="80" y="252" fill="#AFC4DD" font-size="11" text-anchor="middle" font-family="sans-serif">境内中转入口</text>
+
+            <!-- Backbone Transit line -->
+            <path d="M94 220 C 140 180, 180 140, 220 140" stroke="url(#cyan-glow)" stroke-width="2.5" stroke-dasharray="4 2" class="pulse-line"/>
+            
+            <!-- Transit Core -->
+            <circle cx="220" cy="140" r="12" fill="#10263F" stroke="#6CDDE9" stroke-width="2"/>
+            <circle cx="220" cy="140" r="4" fill="#3C92D4"/>
+            <text x="220" y="120" fill="#EAF4FF" font-size="11" text-anchor="middle" font-family="sans-serif">跨境内网专线</text>
+
+            <!-- Exits Branching: HK, JP, SG, US -->
+            <!-- Exit HK -->
+            <path d="M232 140 C 270 140, 310 100, 360 90" stroke="#3C92D4" stroke-width="1.5"/>
+            <circle cx="360" cy="90" r="9" fill="#10263F" stroke="#6CDDE9" stroke-width="2"/>
+            <text x="376" y="94" fill="#6CDDE9" font-size="11" font-weight="600" font-family="sans-serif">HKG (香港)</text>
+
+            <!-- Exit JP -->
+            <path d="M232 140 C 270 150, 310 150, 360 150" stroke="#3C92D4" stroke-width="1.5"/>
+            <circle cx="360" cy="150" r="9" fill="#10263F" stroke="#3C92D4" stroke-width="2"/>
+            <text x="376" y="154" fill="#AFC4DD" font-size="11" font-family="sans-serif">NRT (东京)</text>
+
+            <!-- Exit SG -->
+            <path d="M232 140 C 270 160, 310 200, 360 210" stroke="#3C92D4" stroke-width="1.5"/>
+            <circle cx="360" cy="210" r="9" fill="#10263F" stroke="#3C92D4" stroke-width="2"/>
+            <text x="376" y="214" fill="#AFC4DD" font-size="11" font-family="sans-serif">SIN (新加坡)</text>
+
+            <!-- Exit US -->
+            <path d="M232 140 C 280 180, 320 250, 360 270" stroke="#294F69" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <circle cx="360" cy="270" r="9" fill="#10263F" stroke="#AFC4DD" stroke-width="2"/>
+            <text x="376" y="274" fill="#AFC4DD" font-size="11" font-family="sans-serif">SJC (美西)</text>
+
+            <!-- Visual Legend Callout -->
+            <rect x="55" y="55" width="130" height="42" rx="4" fill="#08172B" stroke="#294F69" opacity="0.9"/>
+            <text x="65" y="72" fill="#6CDDE9" font-size="10" font-family="sans-serif">▲ 逻辑路由抽象示意</text>
+            <text x="65" y="88" fill="#7B8CA3" font-size="9" font-family="sans-serif">非实时单机仪表盘数据</text>
+          </svg>
+        </div>
+
+        <div class="visual-footer">
+          <span class="visual-note font-mono">AUDIT NOTE: 实测图表遵循客观采样，未核实项如实标空</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    padding-top: 4.5rem;
+    padding-bottom: 5rem;
+    background: radial-gradient(circle at 80% 20%, rgba(60, 146, 212, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 10% 80%, rgba(108, 221, 233, 0.08) 0%, transparent 50%);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    box-shadow: 0 0 8px var(--accent-cyan);
+    display: inline-block;
+  }
+
+  .hero-title {
+    font-size: 2.85rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text-light);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-subtext {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .btn-hero-reg {
+    background: linear-gradient(135deg, #FFBE42 0%, #FF9900 100%);
+    color: #061220;
+    box-shadow: 0 4px 14px rgba(255, 190, 66, 0.3);
+  }
+
+  .btn-hero-reg:hover {
+    box-shadow: 0 6px 20px rgba(255, 190, 66, 0.5);
+    color: #000;
+  }
+
+  .hero-metrics-strip {
+    display: flex;
+    align-items: center;
+    background: rgba(16, 38, 63, 0.65);
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    gap: 1.5rem;
+    max-width: 580px;
+  }
+
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .metric-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .metric-val {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+  }
+
+  .metric-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--divider);
+  }
+
+  .hero-visual {
+    width: 100%;
+  }
+
+  .visual-card {
+    background: var(--panel-dark);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .visual-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .visual-title {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .svg-container {
+    width: 100%;
+    aspect-ratio: 460 / 320;
+  }
+
+  .visual-footer {
+    border-top: 1px solid rgba(41, 79, 105, 0.4);
+    padding-top: 0.75rem;
+  }
+
+  .visual-note {
+    font-size: 0.75rem;
+    color: #7B8CA3;
+  }
+
+  @media (max-width: 992px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .hero-title {
+      font-size: 2.25rem;
+    }
+
+    .hero-metrics-strip {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .metric-divider {
+      display: none;
+    }
+  }
+</style>

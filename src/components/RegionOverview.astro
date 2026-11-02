@@ -1,0 +1,89 @@
+---
+import RegionCard from './RegionCard.astro';
+import { regionsData } from '../data/regions';
+---
+
+<section id="regions-overview" class="regions-overview-section" aria-labelledby="regions-overview-title">
+  <div class="container">
+    <div class="overview-header">
+      <div class="section-tag">
+        <span>01 / REGION EVIDENCE DIRECTORY</span>
+      </div>
+      <h2 id="regions-overview-title" class="section-title">
+        地区资料总览与证据分级
+      </h2>
+      <p class="section-desc">
+        公开文档提及中国香港、日本、新加坡及美国等核心出口枢纽。我们对每一处地区资料设定严格的数据证据状态（Evidence Status），杜绝在未取得物理 IP 与抓包凭据时擅自宣称“节点已上线”。
+      </p>
+    </div>
+
+    <div class="regions-grid">
+      {regionsData.map((region) => (
+        <RegionCard region={region} />
+      ))}
+    </div>
+
+    <div class="evidence-legend-bar">
+      <div class="legend-title font-mono">数据状态分级规范：</div>
+      <div class="legend-tags">
+        <span class="status-badge status-reference">REFERENCE_ONLY: 仅公开文章提及</span>
+        <span class="status-badge status-listed">LISTED: 节点清单已列出</span>
+        <span class="status-badge status-verified">MEASURED: 具备真实测速原始记录</span>
+        <span class="status-badge status-verified">VERIFIED: 数据与环境完整复核</span>
+        <span class="status-badge status-unavailable">UNAVAILABLE: 暂无可核验资料</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .regions-overview-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .overview-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+  }
+
+  .regions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .evidence-legend-bar {
+    background: rgba(16, 38, 63, 0.7);
+    border: 1px solid var(--divider);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .legend-title {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-weight: 700;
+  }
+
+  .legend-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  @media (max-width: 880px) {
+    .regions-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

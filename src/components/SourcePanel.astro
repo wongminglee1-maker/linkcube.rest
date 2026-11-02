@@ -1,0 +1,98 @@
+---
+// SourcePanel: accessible modal for inspecting data source provenance
+---
+
+<div id="source-modal" class="source-modal" role="dialog" aria-modal="true" aria-labelledby="source-modal-heading" aria-hidden="true">
+  <div class="source-modal-card">
+    <div class="source-modal-top">
+      <div id="source-modal-heading" class="source-modal-title">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" style="color: var(--accent-cyan);">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+        </svg>
+        <span>数据凭据与来源详情</span>
+      </div>
+      <button id="source-modal-close" class="source-modal-close" aria-label="关闭来源窗口">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </button>
+    </div>
+    <div id="source-modal-body" class="source-modal-body">
+      <!-- Injected by source-tooltip.ts -->
+    </div>
+    <div class="source-modal-footer">
+      <span class="source-notice">遵循 ISO/IEC 25012 数据质量标准，未核实项坚决不混入生产数据</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .source-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(4, 13, 24, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .source-modal.is-open {
+    display: flex;
+  }
+
+  .source-modal-card {
+    background: var(--panel-dark);
+    border: 1px solid var(--accent-cyan);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 520px;
+    padding: 1.75rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(108, 221, 233, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .source-modal-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 0.75rem;
+  }
+
+  .source-modal-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .source-modal-close {
+    color: var(--text-muted);
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: color 0.2s;
+  }
+
+  .source-modal-close:hover {
+    color: #fff;
+  }
+
+  .source-modal-footer {
+    border-top: 1px solid var(--divider);
+    padding-top: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+</style>

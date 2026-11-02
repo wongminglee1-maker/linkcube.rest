@@ -1,0 +1,90 @@
+---
+// DataLegend: explanations of units, timeslots, and verification badges
+import { timeSlotDefinitions } from '../data/measurements';
+---
+
+<div class="data-legend-box">
+  <div class="legend-header">
+    <span class="legend-title font-mono">MEASUREMENT BENCHMARK CRITERIA · 测速指标与基准说明</span>
+  </div>
+
+  <div class="legend-grid">
+    <div class="legend-col">
+      <h4 class="legend-col-title">指标定义与单位</h4>
+      <ul class="legend-list">
+        <li><strong>往返时延 (Latency)</strong>：单位毫秒 (ms)。端到端单次 ICMP/TCP 数据包往返耗时。</li>
+        <li><strong>网络抖动 (Jitter)</strong>：单位毫秒 (ms)。相邻数据包到达时差的波动离散度。</li>
+        <li><strong>丢包率 (Packet Loss)</strong>：单位百分比 (%)。未成功送达并被确认的数据包占比。</li>
+        <li><strong>带宽吞吐 (Throughput)</strong>：单位 Mbps。单位时间内成功传输的有效载荷速率。</li>
+      </ul>
+    </div>
+
+    <div class="legend-col">
+      <h4 class="legend-col-title">测试时段划分 (UTC+8 北京时间)</h4>
+      <ul class="legend-list">
+        {Object.entries(timeSlotDefinitions).map(([key, item]) => (
+          <li>
+            <strong style="color: var(--accent-cyan);">{item.label} ({item.timeRange})</strong>：
+            <span>{item.desc}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .data-legend-box {
+    background: var(--card-dark);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .legend-header {
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .legend-title {
+    font-size: 0.85rem;
+    color: var(--accent-cyan);
+    letter-spacing: 0.05em;
+  }
+
+  .legend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 2rem;
+  }
+
+  .legend-col-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+  }
+
+  .legend-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .legend-list strong {
+    color: var(--text-light);
+  }
+
+  @media (max-width: 800px) {
+    .legend-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

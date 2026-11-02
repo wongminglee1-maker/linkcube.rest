@@ -1,0 +1,199 @@
+---
+import type { RegionEvidence } from '../data/regions';
+
+interface Props {
+  region: RegionEvidence;
+}
+
+const { region } = Astro.props;
+
+const statusClassMap = {
+  REFERENCE_ONLY: 'status-reference',
+  LISTED: 'status-listed',
+  MEASURED: 'status-verified',
+  VERIFIED: 'status-verified',
+  UNAVAILABLE: 'status-unavailable'
+};
+
+const statusLabelMap = {
+  REFERENCE_ONLY: '参考提及 (未实测)',
+  LISTED: '清单已列出',
+  MEASURED: '具备实测记录',
+  VERIFIED: '完整已复核',
+  UNAVAILABLE: '资料暂缺'
+};
+---
+
+<div class="region-card" id={`card-${region.id}`}>
+  <div class="region-card-header">
+    <div class="region-order font-mono">{region.orderNumber}</div>
+    <div class="region-identity">
+      <h3 class="region-title">{region.regionName}</h3>
+      <span class="region-en font-mono">{region.englishName} ({region.countryCode})</span>
+    </div>
+    <span class={`status-badge ${statusClassMap[region.evidenceStatus]}`}>
+      {statusLabelMap[region.evidenceStatus]}
+    </span>
+  </div>
+
+  <p class="region-scenario">
+    {region.scenarioDescription}
+  </p>
+
+  <div class="region-principle-snippet">
+    <strong style="color: var(--accent-cyan);">网络常识：</strong>
+    <span>{region.networkPrinciple.slice(0, 75)}...</span>
+  </div>
+
+  <div class="region-metadata">
+    <div class="meta-row">
+      <span class="meta-label">资料出处：</span>
+      <button
+        class="source-link source-tooltip-trigger"
+        data-source-title={`${region.regionName} 地区参考资料`}
+        data-source-name="LinkCube 官方支持与技术文档"
+        data-source-url={region.sourceURL}
+        data-source-date={region.verifiedAt}
+        data-source-status={statusLabelMap[region.evidenceStatus]}
+        data-source-status-class={statusClassMap[region.evidenceStatus]}
+        data-source-fields="地区场景、协议支持声明"
+        data-source-limits="公开文章提及，尚未接入带时序时间戳的单机测速日志"
+      >
+        {region.sourceURL}
+      </button>
+    </div>
+    <div class="meta-row">
+      <span class="meta-label">复核日期：</span>
+      <span class="meta-val font-mono">{region.verifiedAt}</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-label">实际节点清单：</span>
+      <span class="meta-val unverified-val">
+        {region.nodeName ? region.nodeName : '待取得生产环境完整订阅解密'}
+      </span>
+    </div>
+  </div>
+
+  <div class="region-card-footer">
+    <a href={`/regions/#${region.id}`} class="btn btn-secondary btn-sm" style="width: 100%;">
+      查看 {region.regionName} 章节详情与待补全字段
+    </a>
+  </div>
+</div>
+
+<style>
+  .region-card {
+    background: var(--card-dark);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .region-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 12px 30px rgba(4, 13, 24, 0.45);
+  }
+
+  .region-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 1rem;
+  }
+
+  .region-order {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: rgba(108, 221, 233, 0.4);
+    line-height: 1;
+  }
+
+  .region-identity {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .region-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-light);
+    line-height: 1.2;
+  }
+
+  .region-en {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .region-scenario {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .region-principle-snippet {
+    background: rgba(8, 23, 43, 0.6);
+    border-left: 2px solid var(--accent-blue);
+    padding: 0.75rem 1rem;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--text-light);
+  }
+
+  .region-metadata {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    background: rgba(8, 23, 43, 0.4);
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    border: 1px solid rgba(41, 79, 105, 0.35);
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .meta-label {
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .meta-val {
+    color: var(--text-light);
+  }
+
+  .unverified-val {
+    color: #FFC069;
+    font-style: italic;
+  }
+
+  .source-link {
+    color: var(--accent-cyan);
+    font-size: 0.8rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-align: right;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .source-link:hover {
+    color: #fff;
+  }
+</style>

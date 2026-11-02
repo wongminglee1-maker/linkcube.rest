@@ -1,0 +1,132 @@
+---
+import { verifiedMeasurements } from '../data/measurements';
+import { regionsData } from '../data/regions';
+
+const hasData = verifiedMeasurements.length > 0;
+---
+
+<div class="chart-card reveal-on-scroll" id="chart-timeseries-card">
+  <div class="chart-header">
+    <div class="chart-title-area">
+      <h3 class="chart-title">
+        <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor" style="color: var(--accent-cyan);">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+        </svg>
+        <span>图表 B / D：连续 24 小时分时段延迟变化与下行带宽吞吐</span>
+      </h3>
+      <span class="chart-subtitle">
+        指标单位：往返延迟 (ms) · 下行速率 Throughput (Mbps) · 采样基准：早晨 / 白天 / 晚高峰 / 深夜
+      </span>
+    </div>
+
+    <div class="chart-view-toggle">
+      <button class="toggle-view-btn is-active" data-view="chart" aria-pressed="true">
+        图形视图
+      </button>
+      <button class="toggle-view-btn" data-view="table" aria-pressed="false">
+        数据表格
+      </button>
+    </div>
+  </div>
+
+  <!-- Graphic View -->
+  <div class="chart-viewport" aria-label="分时段延迟时序曲线图表区域">
+    {hasData ? (
+      <div class="real-timeseries-content">
+        <!-- Rendered if raw measurements exist -->
+      </div>
+    ) : (
+      <div class="chart-empty-state">
+        <svg class="chart-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        <h4 class="chart-empty-title">暂无可复核的时间序列采样文件</h4>
+        <p class="chart-empty-desc">
+          时序图表需要连续多日、固定时钟频率的连续采样导出日志。本站拒绝通过贝塞尔曲线随意拟合不存在的早晚高峰对比曲线。
+        </p>
+        <div style="margin-top: 0.5rem;">
+          <a href="/guides/linkcube-time-series/" class="btn btn-secondary btn-sm">
+            阅读《早晚高峰网络数据怎么看？时序分析方法》 ↗
+          </a>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- Table View Alternative -->
+  <div class="chart-table-container" style="display: none;">
+    <table class="chart-data-table" aria-label="分时段延迟与带宽吞吐时序对照表">
+      <thead>
+        <tr>
+          <th scope="col">时钟区间 (UTC+8)</th>
+          <th scope="col">时段分类</th>
+          <th scope="col">期望时延 (ms)</th>
+          <th scope="col">下行吞吐 (Mbps)</th>
+          <th scope="col">上行吞吐 (Mbps)</th>
+          <th scope="col">测试环境</th>
+          <th scope="col">凭证状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="font-mono">06:00 - 11:59</td>
+          <td>早晨基准时段</td>
+          <td class="val-null">待测 (Null)</td>
+          <td class="val-null">待测 (Null)</td>
+          <td class="val-null">待测 (Null)</td>
+          <td>标准化环境待指定</td>
+          <td><span class="status-badge status-unavailable">UNAVAILABLE</span></td>
+        </tr>
+        <tr>
+          <td class="font-mono">12:00 - 18:59</td>
+          <td>白天使段</td>
+          <td class="val-null">待测 (Null)</td>
+          <td class="val-null">待测 (Null)</td>
+          <td class="val-null">待测 (Null)</td>
+          <td>标准化环境待指定</td>
+          <td><span class="status-badge status-unavailable">UNAVAILABLE</span></td>
+        </tr>
+        <tr>
+          <td class="font-mono">19:00 - 23:59</td>
+          <td>晚高峰拥塞压力段</td>
+          <td class="val-null">待测 (Null)</td>
+          <td class="val-null">待测 (Null)</td>
+          <td class="val-null">待测 (Null)</td>
+          <td>标准化环境待指定</td>
+          <td><span class="status-badge status-unavailable">UNAVAILABLE</span></td>
+        </tr>
+        <tr>
+          <td class="font-mono">00:00 - 05:59</td>
+          <td>深夜闲时段</td>
+          <td class="val-null">待测 (Null)</td>
+          <td class="val-null">待测 (Null)</td>
+          <td class="val-null">待测 (Null)</td>
+          <td>标准化环境待指定</td>
+          <td><span class="status-badge status-unavailable">UNAVAILABLE</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-footer">
+    <div class="chart-legend">
+      <div class="legend-item">
+        <span class="legend-color blue"></span>
+        <span>早晨闲时延迟</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color cyan"></span>
+        <span>晚高峰压力延迟</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-color gold"></span>
+        <span>突发下载吞吐</span>
+      </div>
+    </div>
+    <div class="chart-source-tag">
+      <span>测试规范：</span>
+      <span class="font-mono" style="color: var(--accent-cyan);">杜绝多环境杂合 · 遵循统一时区对齐</span>
+    </div>
+  </div>
+</div>
+<script src="../scripts/chart-filter.ts"></script>

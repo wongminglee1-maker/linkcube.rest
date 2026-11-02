@@ -1,0 +1,38 @@
+{
+  "name": "linkcube.rest",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/ensure-runtime.cjs",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "prebuild": "node scripts/ensure-runtime.cjs",
+    "build": "astro build && node scripts/generate-sitemap.mjs",
+    "preview": "astro preview",
+    "audit:data": "node scripts/validate-data.mjs",
+    "audit:content": "node scripts/audit-content.mjs",
+    "audit:seo": "node scripts/audit-seo.mjs",
+    "audit:duplicates": "node scripts/audit-duplicates.mjs",
+    "audit:links": "node scripts/audit-links.mjs",
+    "audit:mobile": "node scripts/audit-mobile.mjs",
+    "audit": "node scripts/validate-data.mjs && node scripts/audit-content.mjs && node scripts/audit-seo.mjs && node scripts/audit-duplicates.mjs && node scripts/audit-links.mjs && node scripts/audit-mobile.mjs",
+    "submit:indexnow": "node scripts/submit-indexnow.mjs"
+  },
+  "keywords": [
+    "linkcube",
+    "linkcube-rest",
+    "data-story",
+    "network-measurements"
+  ],
+  "author": "LinkCube Data Team",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^7.4.4",
+    "typescript": "^5.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "playwright": "^1.49.0"
+  }
+}
